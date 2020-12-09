@@ -3,7 +3,7 @@
 namespace CometCult\BraintreeBundle\Factory;
 
 use CometCult\BraintreeBundle\Exception\InvalidServiceException;
-use Braintree_Configuration;
+use Braintree\Configuration as BraintreeConfiguration;
 
 /**
  * Factory for creating Braintree services
@@ -20,10 +20,10 @@ class BraintreeFactory
      */
     public function __construct($environment, $merchantId, $publicKey, $privateKey)
     {
-        Braintree_Configuration::environment($environment);
-        Braintree_Configuration::merchantId($merchantId);
-        Braintree_Configuration::publicKey($publicKey);
-        Braintree_Configuration::privateKey($privateKey);
+        BraintreeConfiguration::environment($environment);
+        BraintreeConfiguration::merchantId($merchantId);
+        BraintreeConfiguration::publicKey($publicKey);
+        BraintreeConfiguration::privateKey($privateKey);
     }
 
     /**
@@ -36,7 +36,7 @@ class BraintreeFactory
      */
     public function get($serviceName, array $attributes = array())
     {
-        $className = 'Braintree_' . ucfirst($serviceName);
+        $className = '\\Braintree\\' . ucfirst($serviceName);
         if(class_exists($className) && method_exists($className, 'factory')) {
             return $className::factory($attributes);
         } else {
